@@ -2,5 +2,10 @@
 <meta charset="utf-8">
 <title>To-Do lists</title>
 <h1>Your To-Do list</h1>
-<input id="id_new_item" placeholder="Enter a to-do item">
-<table id="id_list_table"></table>
+<form method="POST">
+    <input name="item-text" id="id-new-item" placeholder="Enter a to-do item">
+    {% csrf_token %}
+</form>
+<table id="id-list-table">
+    <tr><td>1: {{ new_item_text }}
+</table>
