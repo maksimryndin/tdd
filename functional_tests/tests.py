@@ -54,7 +54,8 @@ class NewVisitorTest(LiveServerTestCase):
 
         # The page updates again, and now shows both items on her list
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('''2: Use peacock feathers to make a fly''')
+        self.check_for_row_in_list_table(
+            '''2: Use peacock feathers to make a fly''')
 
         # Edith wonders whether the site will remember her list. The she sees
         # that the site has generated a unique URL for her -- there is some
@@ -90,3 +91,20 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they go back to sleep
+
+    def test_layout_and_styling(self):
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She notices the input box is nicely centered
+        inputbox = self.browser.find_element_by_id('id-new-item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=5)
+
+        # She starts a new list and sees the input is nicely
+        # centered there too
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id-new-item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=5)
